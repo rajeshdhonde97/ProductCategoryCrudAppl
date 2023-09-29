@@ -2,6 +2,8 @@ package com.crud.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.crud.model.Category;
 
 public interface CategoryService {
@@ -20,5 +22,8 @@ public interface CategoryService {
 
 	// Delete Category By Id
 	public void deleteCategoryById(int id);
+	
+	//For Server Side Pagination purpose
+	public Page<Category> getAllCategories(int page, int pageSize);
 
 }

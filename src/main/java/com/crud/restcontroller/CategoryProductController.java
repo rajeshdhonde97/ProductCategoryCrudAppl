@@ -3,6 +3,7 @@ package com.crud.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,12 +108,20 @@ public class CategoryProductController {
 		productService.deleteProductById(id);
 	}
 
-	// For Pagination Purpose API
-	@GetMapping("/getList")
-	public ResponseEntity<List<Product>> getAllProduct(@RequestParam(defaultValue = "0") Integer pageNo,
+	// For Server Side Pagination Purpose API for Product
+	@GetMapping("/getAllProduct")
+	public ResponseEntity<Page<Product>> getAllProduct(@RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "100") Integer pageSize) {
+		Page<Product> list = productService.getAllProducts(pageNo, pageSize);
+		return new ResponseEntity<Page<Product>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	// For Server Side Pagination Purpose API for Category
+	@GetMapping("/getAllCategory")
+	public ResponseEntity<Page<Category>> getAllCategories(@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer pageSize) {
-		List<Product> list = productService.getAllProducts(pageNo, pageSize);
-		return new ResponseEntity<List<Product>>(list, new HttpHeaders(), HttpStatus.OK);
+		Page<Category> categories = categoryService.getAllCategories(page, pageSize);
+		return ResponseEntity.ok(categories);
 	}
 
 }

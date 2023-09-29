@@ -1,6 +1,4 @@
 package com.crud.serviceImpl;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +59,11 @@ public class ProductServiceImpl implements ProductService {
 
 	// For Pagination Purpose
 	@Override
-	public List<Product> getAllProducts(Integer pageNo, Integer pageSize) {
+	public Page<Product> getAllProducts(Integer pageNo, Integer pageSize) {
 		Pageable paging = PageRequest.of(pageNo, pageSize);
 		Page<Product> pagedResult = paginationRepository.findAll(paging);
-		if (pagedResult.hasContent()) {
-			return pagedResult.getContent();
-		} else {
-			return new ArrayList<Product>();
-		}
+		return pagedResult;
+		
 
 	}
 

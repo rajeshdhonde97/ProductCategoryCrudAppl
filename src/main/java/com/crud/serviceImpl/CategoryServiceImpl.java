@@ -3,6 +3,8 @@ package com.crud.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.crud.model.Category;
@@ -45,6 +47,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public void deleteCategoryById(int id) {
 		categoryRepository.deleteById(id);
 
+	}
+
+	@Override
+	public Page<Category> getAllCategories(int page, int pageSize) {
+		PageRequest pageRequest = PageRequest.of(page, pageSize);
+		return categoryRepository.findAll(pageRequest);
 	}
 
 }
